@@ -19,10 +19,8 @@ function getRandom(min, max) {
 getRandom(0, 10);
 
 
-function textCommit() {
-  const text = '';
+function textCommit(text, maxLimit) {
   const textLength = text.length;
-  const maxLimit = 140;
   const textMin = 0;
 
   if(textLength === textMin) {
