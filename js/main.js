@@ -1,25 +1,43 @@
+/* eslint-disable no-console */
 function getRandom(min, max) {
-  if (max > 0) {
+  if (max <= 0 || min < 0) {
+    console.log('неверный диапазон');
+    return;
+  }
+
+  if (min > max) {
+    console.log('max меньше min');
+    return;
+  }
+
+  if (min >= 0 && max > 0) {
     const rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
   }
+  console.log('задан неверный диапазон');
 }
 getRandom(0, 10);
 
+
 function textCommit() {
-  const textInput = document.querySelector('.social__footer-text');
-  const buttonOff = document.querySelector('.social__footer-btn');
-  const limit = 140;
+  const text = '';
+  const textLength = text.length;
+  const maxLimit = 140;
+  const textMin = 0;
 
-  textInput.addEventListener('input', () => {
-    const textLength = textInput.value.length;
+  if(textLength === textMin) {
+    console.log('введите комментарий');
+    return;
+  }
 
-    if(textLength > limit) {
-      buttonOff.disabled = true;
-    } else {
-      buttonOff.disabled = false;
-    }
-  });
+  if(textLength <= maxLimit) {
+    console.log('количество символов не привышает лимит');
+    return;
+  }
+
+  if(textLength > maxLimit) {
+    console.log('привышен лимит символов');
+    return (false);
+  }
 }
-
 textCommit();
