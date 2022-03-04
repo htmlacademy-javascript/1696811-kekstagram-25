@@ -38,7 +38,7 @@ function textCommit(text, maxLimit) {
     return (false);
   }
 }
-textCommit();
+textCommit('Привет!', 10);
 
 // дз-4
 // id, число — идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
@@ -49,7 +49,7 @@ textCommit();
 
 const IDENTIFIER_PICTURES = 25;
 
-const description = [
+const descriptions = [
   'Я на море',
   'Рабочие процесс',
   'Поездка в Шерегеш',
@@ -77,7 +77,7 @@ const description = [
   'Крутой спуск на сноуборе'
 ];
 
-const message = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -108,8 +108,8 @@ function getComment (id) {
   return ({
     id: id + 1,
     avatar: `img/avatar-${getRandomInteger(1, 6)}.svg.`,
-    message: message[getRandomInteger(1, message.length - 1)],
-    name: names[getRandomInteger(1, names.length - 1)]
+    message: messages[getRandomInteger(0, messages.length - 1)],
+    name: names[getRandomInteger(0, names.length - 1)]
   });
 }
 
@@ -122,7 +122,7 @@ function getPictureDescription (id) {
   return ({
     id: id + 1,
     url: `photos/${id + 1}.jpg`,
-    description: description[id],
+    descriptions: descriptions[id],
     likes: getRandomInteger(15, 200),
     comments: getComments(getRandomInteger(1, 6))
   });
