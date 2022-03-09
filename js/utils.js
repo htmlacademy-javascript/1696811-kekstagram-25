@@ -16,8 +16,8 @@ function getComment (id, messages, names) {
   });
 }
 
-function getComments (count) {
-  const comments = Array.from({length: count}, (_, idx) => getComment(idx));
+function getComments (count, messages, names) {
+  const comments = Array.from({length: count}, (_, idx) => getComment(idx, messages, names));
   return comments;
 }
 
