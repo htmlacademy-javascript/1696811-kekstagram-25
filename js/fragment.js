@@ -6,7 +6,7 @@ function getPicture (picture) {
   const template = pictureTemplate.cloneNode(true);
   template.querySelector('.picture__img').src = picture.url;
   template.querySelector('.picture__likes').textContent = picture.likes;
-  template.querySelector('.picture__comments').textContent = picture.content.length;
+  template.querySelector('.picture__comments').textContent = picture.comments.length;
   return template;
 }
 
