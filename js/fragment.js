@@ -1,4 +1,4 @@
-import { openGalery } from './galery.js';
+import { openGallery } from './gallery.js';
 
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -9,7 +9,7 @@ function getPicture (picture) {
   template.querySelector('.picture__img').src = picture.url;
   template.querySelector('.picture__likes').textContent = picture.likes;
   template.querySelector('.picture__comments').textContent = picture.comments.length;
-  template.addEventListener('click', () => openGalery(picture));
+  template.addEventListener('click', () => openGallery(picture));
   return template;
 }
 
