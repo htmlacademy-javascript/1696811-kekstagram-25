@@ -1,0 +1,62 @@
+import { isEscapeKey } from './utils.js';
+
+const bodyElement = document.querySelector('body');
+const gallery = document.querySelector('.big-picture');
+const galleryImaqe = gallery.querySelector('.big-picture__img').querySelector('img');
+const galleryClose = gallery.querySelector('.cancel');
+const galleryCaption = gallery.querySelector('.social__caption');
+const galleryLikes = gallery.querySelector('.likes-count');
+const commentsCount = gallery.querySelector('.social__comment-count');
+const galleryComments = gallery.querySelector('.social__comments');
+
+// открытие фото в полноэкранном режиме
+function openGallery (photoDate) {
+  bodyElement.classList.add('modal-open');
+  gallery.classList.remove('hidden');
+  commentsCount.classList.add('hidden');
+  galleryClose.addEventListener('click', onGalleryClose);
+  document.addEventListener('keydown', onGalleryEscPress);
+  fillGallery(photoDate);
+}
+
+export {openGallery};
+
+// сoздание шаблона комментария для фото
+function createCommentTemplate (comment) {
+  return (
+    `<li class="social__comment">
+      <img class="social__picture"
+      src="${comment.avatar}"
+      alt="${comment.name}"
+      width="35" height="35">
+      <p class="social__text">${comment.message}</p>
+    </li>`
+  );
+}
+
+// перенос данных фотографии, после ее открытия в полн.,реж.,
+let comments = [];
+function fillGallery (photoDate) {
+  galleryImaqe.src = photoDate.url;
+  galleryCaption.textContent = photoDate.descriptions;
+  galleryLikes.textContent = photoDate.likes;
+  galleryComments.innerHTML = '';
+  comments = photoDate.comments.slice();
+  commentsCount.querySelector('.comments-count').textContent = comments.length;
+  comments.forEach((comment) => {
+    galleryComments.insertAdjacentHTML('beforeend', createCommentTemplate(comment));
+  });
+}
+
+// закрытие модального окна по клику иконки закрытия
+function onGalleryClose () {
+  bodyElement.classList.remove('modal-open');
+  gallery.classList.add('hidden');
+}
+
+// закрытие модального окна клавишей ESC
+function onGalleryEscPress (evt) {
+  if (isEscapeKey(evt)) {
+    onGalleryClose();
+  }
+}
