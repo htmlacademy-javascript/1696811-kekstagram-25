@@ -1,4 +1,5 @@
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey} from './utils.js';
+import {picturesDescriptions} from './fragment.js';
 
 const bodyElement = document.querySelector('body');
 const gallery = document.querySelector('.big-picture');
@@ -10,16 +11,14 @@ const commentsCount = gallery.querySelector('.social__comment-count');
 const galleryComments = gallery.querySelector('.social__comments');
 
 // открытие фото в полноэкранном режиме
-function openGallery (photoDate) {
+export function openGallery (pictureId) {
   bodyElement.classList.add('modal-open');
   gallery.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   galleryClose.addEventListener('click', onGalleryClose);
   document.addEventListener('keydown', onGalleryEscPress);
-  fillGallery(photoDate);
+  fillGallery(picturesDescriptions[pictureId]);
 }
-
-export {openGallery};
 
 // сoздание шаблона комментария для фото
 function createCommentTemplate (comment) {
@@ -36,7 +35,7 @@ function createCommentTemplate (comment) {
 
 // перенос данных фотографии, после ее открытия в полн.,реж.,
 let comments = [];
-function fillGallery (photoDate) {
+export function fillGallery (photoDate) {
   galleryImaqe.src = photoDate.url;
   galleryCaption.textContent = photoDate.descriptions;
   galleryLikes.textContent = photoDate.likes;

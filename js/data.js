@@ -50,7 +50,7 @@ const names = [
 
 function getPictureDescription (id) {
   return ({
-    id: id + 1,
+    id: id,
     url: `photos/${id + 1}.jpg`,
     descriptions: descriptions[id],
     likes: getRandomInteger(15, 200),
