@@ -1,5 +1,5 @@
 const uploadForm = document.querySelector('.img-upload__form');
-const hashTagsMaxAmount = 5;
+const hashtagInput  = 5;
 const descriptionLength = 140;
 
 //Шаблон для проверки вводимых хэш-тегов
@@ -21,7 +21,7 @@ function getHashTagsArray (str) {
 
 //Проверка на количество хэш-тегов
 function checkHashTagsAmount (arr) {
-  return arr.length <= hashTagsMaxAmount;
+  return arr.length <= hashtagInput;
 }
 
 //Проверка на отсутствие повторяющихся хэш-тегов

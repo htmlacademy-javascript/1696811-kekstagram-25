@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey} from './utils.js';
 import {uploadFormValidate} from './validation.js';
 
 //Объявление переменных
@@ -44,3 +44,17 @@ function onUploadFormSubmit (evt) {
   evt.preventDefault();
   uploadFormValidate();
 }
+
+hashTagsField.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+  if(isEscapeKey(evt)) {
+    evt.preventDefault();
+  }
+});
+
+commentField.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+  if(isEscapeKey(evt)) {
+    evt.preventDefault();
+  }
+});

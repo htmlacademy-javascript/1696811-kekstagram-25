@@ -1,4 +1,5 @@
 import {getPictures} from './data.js';
+import {openGallery} from './gallery.js';
 
 //Определение переменных
 const IDENTIFIER_PICTURES = 25;
@@ -14,6 +15,7 @@ function getPicture (picture) {
   template.querySelector('.picture__img').dataset.pictureId = picture.id;
   template.querySelector('.picture__likes').textContent = picture.likes;
   template.querySelector('.picture__comments').textContent = picture.comments.length;
+  template.addEventListener('click', () => openGallery(picture.id));
   return template;
 }
 

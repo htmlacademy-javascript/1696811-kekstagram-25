@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey} from './utils.js';
 import {picturesDescriptions} from './fragment.js';
 
 const bodyElement = document.querySelector('body');
@@ -9,16 +9,6 @@ const galleryCaption = gallery.querySelector('.social__caption');
 const galleryLikes = gallery.querySelector('.likes-count');
 const commentsCount = gallery.querySelector('.social__comment-count');
 const galleryComments = gallery.querySelector('.social__comments');
-
-const picturesContainer = document.querySelector('.pictures');
-picturesContainer.addEventListener('click', (evt) => onContainerClick (evt));
-
-//Проверка клика по изображению из контейнера миниатюр
-function onContainerClick (evt) {
-  if (evt.target.nodeName === 'IMG') {
-    openGallery (evt.target.dataset.pictureId);
-  }
-}
 
 // открытие фото в полноэкранном режиме
 export function openGallery (pictureId) {
