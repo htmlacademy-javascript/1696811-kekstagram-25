@@ -1,6 +1,6 @@
 const uploadForm = document.querySelector('.img-upload__form');
-const hashtagInput  = 5;
-const descriptionLength = 140;
+const HASHTAG_INPUT  = 5;
+const DESCRIPTION_LENGTH = 140;
 
 //Шаблон для проверки вводимых хэш-тегов
 // eslint-disable-next-line no-misleading-character-class
@@ -21,7 +21,7 @@ function getHashTagsArray (str) {
 
 //Проверка на количество хэш-тегов
 function checkHashTagsAmount (arr) {
-  return arr.length <= hashtagInput;
+  return arr.length <= HASHTAG_INPUT;
 }
 
 //Проверка на отсутствие повторяющихся хэш-тегов
@@ -38,12 +38,12 @@ function validateHashTags (value) {
 
 //Проверка длины введенного комментария не более descriptionLength
 function validateDescription (value) {
-  return value.length >= 1 && value.length <= descriptionLength;
+  return value.length >= 0 && value.length <= DESCRIPTION_LENGTH;
 }
 
 //Создание валидаторов для библиотеки Pristine на указанных полях
 pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введенные хэш-теги не соответствуют <a href="#" aria-label="Требования к хэш-тегам">требованиям</a>');
-pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, `Длина комментария должна быть от 1 до ${descriptionLength} символов`);
+pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, `Длина комментария должна быть от 0 до ${DESCRIPTION_LENGTH} символов`);
 
 //Запуск валидации перед отправкой формы
 function uploadFormValidate () {
