@@ -54,7 +54,7 @@ function getPictureDescription (id) {
     url: `photos/${id + 1}.jpg`,
     descriptions: descriptions[id],
     likes: getRandomInteger(15, 200),
-    comments: getComments(getRandomInteger(1, 6), messages, names)
+    comments: getComments(getRandomInteger(1, 50), messages, names)
   });
 }
 
