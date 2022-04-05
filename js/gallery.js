@@ -13,9 +13,89 @@ const commentsButton = gallery.querySelector('.social__comments-loader') ;
 const commentsLoader = gallery.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
+let comments = [];
 let commentsCounter = 0;
 
-// открытие фото в полноэкранном режиме
+const createCommentTemplate = (comment) => (
+  `<li class="social__comment">
+     <img class="social__picture"
+       src="${comment.avatar}"
+       alt="${comment.name}"
+       width="35" height="35">
+       <p class="social__text">${comment.message}</p>
+   </li>`
+);
+
+//Отрисовка новых комментариев, увеличение счетчика на величину COMMENTS_LIMIT
+const pushComments = (commentsArray) => {
+  commentsArray.forEach((comment) => {
+    galleryComments.insertAdjacentHTML('beforeend', createCommentTemplate(comment));
+  });
+  commentsCounter += commentsArray.length;
+  commentsLoader.textContent = commentsCounter;
+};
+
+//Скрытие кнопки подгрузки новых комментариев
+const hideCommentsButton = () => {
+  commentsButton.classList.add('hidden');
+};
+
+//Загрузка дополнительных комментариев по клику сommentsButton
+const onCommentsButtonClick = () => {
+  if (comments.length <= COMMENTS_LIMIT) {
+    hideCommentsButton();
+    commentsButton.removeEventListener('click', onCommentsButtonClick);
+  }
+  pushComments(comments.splice(0, COMMENTS_LIMIT));
+};
+
+//Показ кнопки подгрузки новых комментариев
+const showCommentsButton = () => {
+  commentsButton.classList.remove('hidden');
+  commentsButton.addEventListener('click', onCommentsButtonClick);
+};
+
+//Отображение счетчика комментариев после их отрисовки в пределах COMMENTS_LIMIT
+const showCommentsCountBlock = () => {
+  commentsCount.classList.remove('hidden');
+  pushComments(comments.splice(0, COMMENTS_LIMIT));
+};
+
+// перенос данных фотографии, после ее открытия в полн.,реж.,
+const fillGallery = (photoData) => {
+  galleryImaqe.src = photoData.url;
+  galleryCaption.textContent = photoData.description;
+  galleryLikes.textContent = photoData.likes;
+  galleryComments.innerHTML = '';
+  comments = photoData.comments.slice();
+  commentsCount.querySelector('.comments-count').textContent = comments.length;
+  showCommentsCountBlock();
+  if (photoData.comments.length <= COMMENTS_LIMIT) {
+    hideCommentsButton();
+  } else {
+    showCommentsButton();
+  }
+};
+
+//Закрытие модального окна по клику иконки закрытия
+const onGalleryClose = () => {
+  bodyElement.classList.remove('modal-open');
+  gallery.classList.add('hidden');
+  hideCommentsButton();
+  commentsCounter = 0;
+  comments = [];
+  galleryClose.removeEventListener('click', onGalleryClose);
+};
+
+//Закрытие модального окна клавишей ESC
+const onGalleryEscPress = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    onGalleryClose();
+    document.removeEventListener('keydown', onGalleryEscPress);
+  }
+};
+
 export function openGallery (pictureId) {
   bodyElement.classList.add('modal-open');
   gallery.classList.remove('hidden');
@@ -23,83 +103,4 @@ export function openGallery (pictureId) {
   galleryClose.addEventListener('click', onGalleryClose);
   document.addEventListener('keydown', onGalleryEscPress);
   fillGallery(picturesDescriptions[pictureId]);
-}
-
-// перенос данных фотографии, после ее открытия в полн.,реж.,
-let comments = [];
-export function fillGallery (photoDate) {
-  galleryImaqe.src = photoDate.url;
-  galleryCaption.textContent = photoDate.descriptions;
-  galleryLikes.textContent = photoDate.likes;
-  galleryComments.innerHTML = '';
-  comments = photoDate.comments.slice();
-  commentsCount.querySelector('.comments-count').textContent = comments.length;
-
-  showCommentsCountBlock();
-  if (photoDate.comments.length <= COMMENTS_LIMIT) {
-    hideCommentsButton();
-  } else {
-    showCommentsButton();
-  }
-}
-
-// сoздание шаблона комментария для фото
-function createCommentTemplate (comment) {
-  return (
-    `<li class="social__comment">
-      <img class="social__picture"
-      src="${comment.avatar}"
-      alt="${comment.name}"
-      width="35" height="35">
-      <p class="social__text">${comment.message}</p>
-    </li>`
-  );
-}
-
-//Загрузка дополнительных комментариев по клику сommentsButton
-function onCommentsButtonClick () {
-  if (comments.length <= COMMENTS_LIMIT) {
-    hideCommentsButton();
-  }
-  pushComments(comments.splice(0, COMMENTS_LIMIT));
-}
-
-//Показ кнопки подгрузки новых комментариев
-function showCommentsButton ()  {
-  commentsButton.classList.remove('hidden');
-  commentsButton.addEventListener('click', onCommentsButtonClick);
-}
-
-//Скрытие кнопки подгрузки новых комментариев
-function hideCommentsButton () {
-  commentsButton.classList.add('hidden');
-  commentsButton.removeEventListener('click', onCommentsButtonClick);
-}
-
-//Отрисовка новых комментариев, увеличение счетчика на величину COMMENTS_LIMIT
-function pushComments (commentsArray) {
-  commentsArray.forEach((comment) => {
-    commentsCount.insertAdjacentHTML('beforeend', createCommentTemplate(comment));
-  });
-  commentsCounter += commentsArray.length;
-  commentsLoader.textContent = commentsCounter;
-}
-
-//Отображение счетчика комментариев после их отрисовки в пределах COMMENTS_LIMIT
-function showCommentsCountBlock () {
-  commentsCount.classList.remove('hidden');
-  pushComments(comments.splice(0, COMMENTS_LIMIT));
-}
-
-// закрытие модального окна по клику иконки закрытия
-function onGalleryClose () {
-  bodyElement.classList.remove('modal-open');
-  gallery.classList.add('hidden');
-}
-
-// закрытие модального окна клавишей ESC
-function onGalleryEscPress (evt) {
-  if (isEscapeKey(evt)) {
-    onGalleryClose();
-  }
 }
