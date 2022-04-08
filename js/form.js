@@ -1,5 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {uploadFormValidate} from './validation.js';
+import {setScaleBlock, closeScaleBlock} from './scale.js';
+import {setPictureEffects, closePictureEffects} from './effect.js';
 
 //Объявление переменных
 const bodyElement = document.querySelector('body');
@@ -19,6 +21,8 @@ function openUploadForm () {
   editBlockClose.addEventListener('click', onEditCloseClick);
   document.addEventListener('keydown', onEditEscPress);
   uploadForm.addEventListener('submit', onUploadFormSubmit);
+  setScaleBlock();
+  setPictureEffects();
 }
 
 //Скрытие блока редактирования кнопкой закрытия
@@ -29,6 +33,7 @@ function onEditCloseClick () {
   editBlock.classList.add('hidden');
   editBlockClose.removeEventListener('click', onEditCloseClick);
   document.removeEventListener('keydown', onEditEscPress);
+  closePictureEffects();
 }
 
 //Скрытие блока редактирования по нажатию Esc
@@ -43,6 +48,7 @@ function onEditEscPress (evt) {
 function onUploadFormSubmit (evt) {
   evt.preventDefault();
   uploadFormValidate();
+  closeScaleBlock();
 }
 
 hashTagsField.addEventListener('keydown', (evt) => {

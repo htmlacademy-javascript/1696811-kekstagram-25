@@ -42,7 +42,7 @@ function validateDescription (value) {
 }
 
 //Создание валидаторов для библиотеки Pristine на указанных полях
-pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введенные хэш-теги не соответствуют <a href="#" aria-label="Требования к хэш-тегам">требованиям</a>');
+pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введенные хэш-теги не соответствуют <a class="text__link" href="#" aria-label="Требования к хэш-тегам">требованиям</a>');
 pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, `Длина комментария должна быть от 0 до ${DESCRIPTION_LENGTH} символов`);
 
 //Запуск валидации перед отправкой формы
