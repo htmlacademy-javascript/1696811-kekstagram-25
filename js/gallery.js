@@ -1,5 +1,6 @@
-import {isEscapeKey} from './utils.js';
-import {picturesDescriptions} from './fragment.js';
+import {isEscapeKey, showAlert} from './utils.js';
+import {getFragment} from './fragment.js';
+import {getData} from './api.js';
 
 const bodyElement = document.querySelector('body');
 const gallery = document.querySelector('.big-picture');
@@ -11,6 +12,7 @@ const commentsCount = gallery.querySelector('.social__comment-count');
 const galleryComments = gallery.querySelector('.social__comments');
 const commentsButton = gallery.querySelector('.social__comments-loader') ;
 const commentsLoader = gallery.querySelector('.comments-loader');
+const picturesContainer = document.querySelector('.pictures');
 
 const COMMENTS_LIMIT = 5;
 let comments = [];
@@ -96,11 +98,26 @@ const onGalleryEscPress = (evt) => {
   }
 };
 
-export function openGallery (pictureId) {
+function openGallery (template) {
   bodyElement.classList.add('modal-open');
   gallery.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   galleryClose.addEventListener('click', onGalleryClose);
   document.addEventListener('keydown', onGalleryEscPress);
-  fillGallery(picturesDescriptions[pictureId]);
+  fillGallery(template);
 }
+
+//Проверка клика по изображению из контейнера миниатюр
+const onContainerClick = (evt, pictures) => {
+  if (evt.target.classList.contains('picture__img')) {
+    const pictureId = evt.target.dataset.pictureId;
+    openGallery (pictures[pictureId]);
+  }
+};
+
+//Передача описаний превью в полноразмерный режим просмотра
+getData(getFragment, showAlert)
+  .then((pictures) => picturesContainer.addEventListener('click', (evt) => onContainerClick (evt, pictures)));
+
+
+export {fillGallery, openGallery};

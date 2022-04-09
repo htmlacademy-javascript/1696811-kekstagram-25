@@ -4,7 +4,7 @@ const DESCRIPTION_LENGTH = 140;
 
 //Шаблон для проверки вводимых хэш-тегов
 // eslint-disable-next-line no-misleading-character-class
-const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
+const regularExpression = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__text',
@@ -47,7 +47,7 @@ pristine.addValidator(uploadForm.querySelector('.text__description'), validateDe
 
 //Запуск валидации перед отправкой формы
 function uploadFormValidate () {
-  pristine.validate();
+  return pristine.validate();
 }
 
 export {uploadFormValidate};

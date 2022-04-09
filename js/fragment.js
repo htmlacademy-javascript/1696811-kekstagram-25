@@ -1,8 +1,6 @@
-import {getPictures} from './data.js';
 import {openGallery} from './gallery.js';
 
 //Определение переменных
-const IDENTIFIER_PICTURES = 25;
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -25,9 +23,8 @@ function getFragment (pictures) {
   pictures.forEach((picture) => {
     fragment.append(getPicture(picture));
   });
-  return fragment;
+  picturesContainer.append(fragment);
+  return pictures;
 }
 
-//Передача данных фотографии для заполнения шаблона полноразмерного фото
-export const picturesDescriptions = getPictures(IDENTIFIER_PICTURES);
-picturesContainer.append(getFragment(picturesDescriptions));
+export {getPicture, getFragment};
