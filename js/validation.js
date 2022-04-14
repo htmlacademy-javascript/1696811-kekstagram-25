@@ -1,53 +1,79 @@
+//Объявление переменных
 const uploadForm = document.querySelector('.img-upload__form');
+const hashTagsField = uploadForm.querySelector('.text__hashtags');
 const HASHTAG_INPUT  = 5;
 const DESCRIPTION_LENGTH = 140;
+let errorMessage = '';
 
 //Шаблон для проверки вводимых хэш-тегов
-// eslint-disable-next-line no-misleading-character-class
-const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
+const regularExpression = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
 
-const pristine = new Pristine(uploadForm, {
+const pristine = window.Pristine(uploadForm, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextTag: 'p',
-  errorTextClass: 'field__error'
+  errorTextClass: 'text__error'
 });
 
 //Приведение тегов к строчному регистру
-function getHashTagsArray (str) {
+const getSplitArray = (str) => {
   const splitArray = str.split(' ').map((element) => element.toLowerCase());
   return splitArray;
-}
+};
 
-//Проверка на количество хэш-тегов
-function checkHashTagsAmount (arr) {
-  return arr.length <= HASHTAG_INPUT;
-}
+//Проверка хэш-тегов на соответствие указанным требованиям
+const validateHashTags = (value) => {
+  errorMessage = '';
+  const inputText = value.trim();
 
-//Проверка на отсутствие повторяющихся хэш-тегов
-function checkHashTagsRepeat (arr) {
-  return (arr.every((element) => arr.indexOf(element) === arr.lastIndexOf(element)));
-}
+  if (!inputText) {
+    return true;
+  }
 
-//Проверка валидности поля ввода хэш-тегов
-function validateHashTags (value) {
-  return getHashTagsArray(value).every((element, idx, array) =>
-    regularExpression.test(element) && checkHashTagsAmount(array) && checkHashTagsRepeat(array)
-  );
-}
+  const splitArray = getSplitArray(inputText);
+  const hashTagsRules = [
+    {
+      check: splitArray.some((element) => element.indexOf('#', 1) >= 0),
+      error: 'Хэш-теги должны разделяться пробелами'
+    },
+    {
+      check: splitArray.some((element) => !regularExpression.test(element)),
+      error: 'Хэш-тег содержит недопустимые символы, либо состоит из одной решётки'
+    },
+    {
+      check: splitArray.length > HASHTAG_INPUT,
+      error: `Нельзя указать больше ${HASHTAG_INPUT} хэш-тегов`
+    },
+    {
+      check: splitArray.some((element) => element.length > DESCRIPTION_LENGTH),
+      error: `Максимальная длина одного хэш-тега ${DESCRIPTION_LENGTH} символов, включая #`
+    },
+    {
+      check: !splitArray.every((element, idx, arr) => arr.indexOf(element) === arr.lastIndexOf(element)),
+      error: 'Хэш-теги не должны повторяться'
+    },
+    {
+      check: splitArray.some((element) => element[0] !== '#'),
+      error: 'Хэш-тег должен начинаться с символа #'
+    },
+  ];
 
-//Проверка длины введенного комментария не более descriptionLength
-function validateDescription (value) {
-  return value.length >= 0 && value.length <= DESCRIPTION_LENGTH;
-}
+  return hashTagsRules.every((rule) => {
+    const isInvalid = rule.check;
+    if (isInvalid) {
+      errorMessage = rule.error;
+    }
+    return !isInvalid;
+  });
+};
+
+//Показ сообщения об ошибке на основании работы функции validateHashTags
+const showErrorMessage = () => errorMessage;
 
 //Создание валидаторов для библиотеки Pristine на указанных полях
-pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введенные хэш-теги не соответствуют <a class="text__link" href="#" aria-label="Требования к хэш-тегам">требованиям</a>');
-pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, `Длина комментария должна быть от 0 до ${DESCRIPTION_LENGTH} символов`);
+pristine.addValidator(hashTagsField, validateHashTags, showErrorMessage);
 
 //Запуск валидации перед отправкой формы
-function uploadFormValidate () {
-  pristine.validate();
-}
+const uploadFormValidate = () => pristine.validate();
 
 export {uploadFormValidate};

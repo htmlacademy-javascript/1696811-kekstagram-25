@@ -5,8 +5,6 @@ function getRandomInteger(min, max) {
   }
 }
 
-export {getRandomInteger};
-
 function getComment (id, messages, names) {
   return ({
     id: id + 1,
@@ -21,10 +19,27 @@ function getComments (count, messages, names) {
   return comments;
 }
 
-export {getComments};
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function isEscapeKey (evt) {
-  return evt.key === 'Escape';
+const ALERT_SHOW_TIME = 3000;
+
+//Показ блока с текстом ошибки при получении ошибки от сервера при загрузке данных
+function showAlert (errorMessage) {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 10;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.width = '100%';
+  alertContainer.style.top = '2%';
+  alertContainer.style.fontSize = '18px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.color = '#ffe753';
+  alertContainer.style.fontFamily = '"Open Sans", "Arial", sans-serif';
+  alertContainer.style.lineHeight = '1.5em';
+  alertContainer.style.textTransform = 'none';
+  alertContainer.innerHTML = errorMessage;
+  document.body.append(alertContainer);
+
+  setTimeout(() => alertContainer.remove(), ALERT_SHOW_TIME);
 }
 
-export {isEscapeKey};
+export {getRandomInteger, getComments, isEscapeKey, showAlert};
