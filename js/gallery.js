@@ -1,5 +1,5 @@
 import {isEscapeKey, showAlert} from './utils.js';
-import {getFragment} from './fragment.js';
+import {setFilters} from './photo-filter.js';
 import {getData} from './api.js';
 
 const bodyElement = document.querySelector('body');
@@ -98,14 +98,14 @@ const onGalleryEscPress = (evt) => {
   }
 };
 
-function openGallery (template) {
+const openGallery = (template) => {
   bodyElement.classList.add('modal-open');
   gallery.classList.remove('hidden');
   commentsCount.classList.add('hidden');
   galleryClose.addEventListener('click', onGalleryClose);
   document.addEventListener('keydown', onGalleryEscPress);
   fillGallery(template);
-}
+};
 
 //Проверка клика по изображению из контейнера миниатюр
 const onContainerClick = (evt, pictures) => {
@@ -116,7 +116,7 @@ const onContainerClick = (evt, pictures) => {
 };
 
 //Передача описаний превью в полноразмерный режим просмотра
-getData(getFragment, showAlert)
+getData(setFilters, showAlert)
   .then((pictures) => picturesContainer.addEventListener('click', (evt) => onContainerClick (evt, pictures)));
 
 
