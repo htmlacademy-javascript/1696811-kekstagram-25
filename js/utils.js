@@ -42,4 +42,21 @@ function showAlert (errorMessage) {
   setTimeout(() => alertContainer.remove(), ALERT_SHOW_TIME);
 }
 
-export {getRandomInteger, getComments, isEscapeKey, showAlert};
+//Перемешивание элментов заданного массива случайным образом
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = getRandomInteger(0, i);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+
+//Устранение "дребезга" при многократных кликах, обращениях к функциям
+let timeoutId;
+const debounce = (callback, timeoutDelay) => {
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => callback(), timeoutDelay);
+};
+
+export {getRandomInteger, getComments, isEscapeKey, showAlert, shuffleArray, debounce};

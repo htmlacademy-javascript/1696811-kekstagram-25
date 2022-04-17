@@ -27,4 +27,4 @@ function getFragment (pictures) {
   return pictures;
 }
 
-export {getPicture, getFragment};
+export {getFragment};
