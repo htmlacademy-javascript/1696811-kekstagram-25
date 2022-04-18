@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 3000;
+
 const getRandomInteger = (min, max) => {
   if (min >= 0 && max > 0) {
     const rand = min + Math.random() * (max + 1 - min);
@@ -7,10 +9,8 @@ const getRandomInteger = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const ALERT_SHOW_TIME = 3000;
-
 //Показ блока с текстом ошибки при получении ошибки от сервера при загрузке данных
-const showAlert = (errorMessage) => {
+const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 10;
   alertContainer.style.position = 'absolute';
@@ -22,7 +22,7 @@ const showAlert = (errorMessage) => {
   alertContainer.style.fontFamily = '"Open Sans", "Arial", sans-serif';
   alertContainer.style.lineHeight = '1.5em';
   alertContainer.style.textTransform = 'none';
-  alertContainer.textContent = errorMessage;
+  alertContainer.textContent = message;
   document.body.append(alertContainer);
   setTimeout(() => alertContainer.remove(), ALERT_SHOW_TIME);
 };

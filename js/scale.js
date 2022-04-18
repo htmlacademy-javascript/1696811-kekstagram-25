@@ -1,17 +1,16 @@
-const uploadFormElement = document.querySelector('.img-upload__form');
-const reduceButtonElement = uploadFormElement.querySelector('.scale__control--smaller');
-const increaseButtonElement = uploadFormElement.querySelector('.scale__control--bigger');
-const scaleValueElement = uploadFormElement.querySelector('.scale__control--value');
-const picturePreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
+let currentPictureSize = 100;
 
-const PictureSize = {
+const pictureSizeElement = {
   MIN: 25,
   MAX: 100,
   DEFAULT: 100,
   STEP: 25
 };
-
-let currentPictureSize = 100;
+const uploadFormElement = document.querySelector('.img-upload__form');
+const reduceButtonElement = uploadFormElement.querySelector('.scale__control--smaller');
+const increaseButtonElement = uploadFormElement.querySelector('.scale__control--bigger');
+const scaleValueElement = uploadFormElement.querySelector('.scale__control--value');
+const picturePreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
 
 //Изменение размеров фото и содержимого поля отображения масштаба
 const setPictureSize = (size) => {
@@ -22,23 +21,23 @@ const setPictureSize = (size) => {
 
 //Уменьшение масштаба фото на величину STEP
 const onReduceButtonClick = () => {
-  if (currentPictureSize > PictureSize.MIN) {
-    const newSize = currentPictureSize - PictureSize.STEP;
+  if (currentPictureSize > pictureSizeElement.MIN) {
+    const newSize = currentPictureSize - pictureSizeElement.STEP;
     setPictureSize(newSize);
   }
 };
 
 //Увеличение масштаба фото на величину STEP
 const onIncreaseButtonClick = () => {
-  if (currentPictureSize < PictureSize.MAX) {
-    const newSize = currentPictureSize + PictureSize.STEP;
+  if (currentPictureSize < pictureSizeElement.MAX) {
+    const newSize = currentPictureSize + pictureSizeElement.STEP;
     setPictureSize(newSize);
   }
 };
 
 //Добавление обработчиков на кнопки после загрузки фотографии, установка масштаба по умолчанию
 const setScaleBlock = () => {
-  setPictureSize(PictureSize.DEFAULT);
+  setPictureSize(pictureSizeElement.DEFAULT);
   reduceButtonElement.addEventListener('click', onReduceButtonClick);
   increaseButtonElement.addEventListener('click', onIncreaseButtonClick);
 };
