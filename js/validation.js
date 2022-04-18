@@ -1,8 +1,8 @@
 //Объявление переменных
-const uploadForm = document.querySelector('.img-upload__form');
-const hashTagsField = uploadForm.querySelector('.text__hashtags');
 const HASHTAG_INPUT  = 5;
 const DESCRIPTION_LENGTH = 140;
+const uploadForm = document.querySelector('.img-upload__form');
+const hashTagsField = uploadForm.querySelector('.text__hashtags');
 let errorMessage = '';
 
 //Шаблон для проверки вводимых хэш-тегов
