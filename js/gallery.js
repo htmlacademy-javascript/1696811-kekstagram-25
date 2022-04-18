@@ -2,6 +2,10 @@ import {isEscapeKey, showAlert} from './utils.js';
 import {setFilters} from './photo-filter.js';
 import {getData} from './api.js';
 
+const COMMENTS_LIMIT = 5;
+let comments = [];
+let commentsCounter = 0;
+
 const bodyElement = document.querySelector('body');
 const gallery = document.querySelector('.big-picture');
 const galleryImaqe = gallery.querySelector('.big-picture__img').querySelector('img');
@@ -13,10 +17,6 @@ const galleryComments = gallery.querySelector('.social__comments');
 const commentsButton = gallery.querySelector('.social__comments-loader') ;
 const commentsLoader = gallery.querySelector('.comments-loader');
 const picturesContainer = document.querySelector('.pictures');
-
-const COMMENTS_LIMIT = 5;
-let comments = [];
-let commentsCounter = 0;
 
 const createCommentTemplate = (comment) => (
   `<li class="social__comment">

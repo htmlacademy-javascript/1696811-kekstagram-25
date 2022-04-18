@@ -2,11 +2,11 @@ import {getFragment} from './fragment.js';
 import {shuffleArray, debounce} from './utils.js';
 
 //Объявление переменных
+const RANDOM_QTY = 10;
+const RERENDER_DELAY = 300;
 const galleryFiltersPanel = document.querySelector('.img-filters');
 const galleryFiltersForm = document.querySelector('.img-filters__form');
 const picturesContainer = document.querySelector('.pictures');
-const RANDOM_QTY = 10;
-const RERENDER_DELAY = 300;
 
 //Добавление выбранному фильтру класса активности
 const toggleButtonClass = (evt, id) => {
